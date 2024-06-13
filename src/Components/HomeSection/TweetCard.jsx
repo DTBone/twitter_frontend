@@ -54,12 +54,13 @@ const TweetCard = () => {
           <div className="flex justify-between items-center">
             <div className="flex cursor-pointer items-center space-x-2">
               <span className="font-semibold">Thanh Binh neeee</span>
-              <span className="text-gray--600">@thanhbinhne . 2m</span>
+
               <img
                 className="m1-2 w-5 h-5"
                 src="https://abs.twimg.com/responsive-web/client-web/verification-card-v2@3x.8ebee01a.png"
                 alt=""
               />
+              <span className="text-gray--600">@thanhbinhne . 2m</span>
             </div>
             <div>
               <Button
@@ -87,7 +88,10 @@ const TweetCard = () => {
           </div>
 
           <div className="mt-2">
-            <div className="cursor-pointer">
+            <div
+              className="cursor-pointer"
+              onClick={() => navigate(`/twit/${3}`)}
+            >
               <p className="mb-2 p-0">
                 twitter clone - full stack project spring boot and react
               </p>
