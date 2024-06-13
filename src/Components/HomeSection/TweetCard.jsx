@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -10,11 +10,17 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { FavoriteOutlined } from "@mui/icons-material";
+import ReplyModal from "./ReplyModal";
 
 const TweetCard = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const [openReplyModal, setOpenReplyModal] = useState(false);
+  const handleOpenReplyModel = () => setOpenReplyModal(true);
+  const handleCloseReplyModal = () => setOpenReplyModal(false);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -27,9 +33,9 @@ const TweetCard = () => {
     handleClose();
   };
 
-  const handleOpenReplyModel = () => {
-    console.log("Open Reply Model");
-  };
+  // const handleOpenReplyModel = () => {
+  //   console.log("Open Reply Model");
+  // };
   const handleCreateRetweet = () => {
     console.log("Create Retweet");
   };
@@ -37,7 +43,7 @@ const TweetCard = () => {
     console.log("Like Tweet");
   };
   return (
-    <div className="">
+    <React.Fragment>
       {/* <div className="flex items-center font-semibold text-gray-700 py-2">
         <RepeatIcon></RepeatIcon>
         <p>You ReTweet</p>
@@ -56,11 +62,11 @@ const TweetCard = () => {
               <span className="font-semibold">Thanh Binh neeee</span>
 
               <img
-                className="m1-2 w-5 h-5"
+                className="ml-2 w-5 h-5"
                 src="https://abs.twimg.com/responsive-web/client-web/verification-card-v2@3x.8ebee01a.png"
                 alt=""
               />
-              <span className="text-gray--600">@thanhbinhne . 2m</span>
+              <span className="text-gray-600">@thanhbinhne . 2m</span>
             </div>
             <div>
               <Button
@@ -155,7 +161,10 @@ const TweetCard = () => {
           </div>
         </div>
       </div>
-    </div>
+      <section>
+        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal} />
+      </section>
+    </React.Fragment>
   );
 };
 export default TweetCard;
