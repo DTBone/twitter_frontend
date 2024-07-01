@@ -3,8 +3,12 @@ import navigationMenu from "../Navigation/NavigationMenu";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../Store/Auth/Action";
 
 const Navigation = () => {
+  const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -17,6 +21,7 @@ const Navigation = () => {
   const handleLogout = () => {
     console.log("Logout");
     handleClose();
+    dispatch(logout);
   };
   return (
     <div className="h-screen sticky top-0">
@@ -73,8 +78,10 @@ const Navigation = () => {
             src="https://scontent.fsgn10-1.fna.fbcdn.net/v/t39.30808-1/446889174_2242024396164212_905261128201787308_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHnf2PS5Rg-xe-zG5-AG6wPv3_UPiFju-m_f9Q-IWO76eUQo05gstLrD2L6RzXxDMUFWfTFpoPOhFy2uxXWlN2m&_nc_ohc=39jXQzC-8UIQ7kNvgFVHVYD&_nc_ht=scontent.fsgn10-1.fna&oh=00_AYBPxz47ezQVN2prfL3Fzimxx_oncmqNMzOPGsnyJSlTgw&oe=666E56DC"
           />
           <div>
-            <span>Thanh Binh nee</span>
-            <span className="opacity-70">@thanhbinhne</span>
+            <p>{auth.user?.fullName}</p>
+            <div className="opacity-70">
+              @{auth.user?.fullName.split(" ").join("_").toLowerCase()}
+            </div>
           </div>
 
           <Button
