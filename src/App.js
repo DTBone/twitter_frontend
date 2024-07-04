@@ -10,6 +10,7 @@ import { getUserProfile } from './Store/Auth/Action';
 function App() {
   const jwt = localStorage.getItem("jwt");
   const { auth } = useSelector(store => store)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,6 +19,9 @@ function App() {
       navigate("/");
     }
   }, [auth.jwt]);
+  //console.log("Auth user: ", auth.user)
+  //console.log("JWT: ", jwt);
+
   return (
     <div className="">
       <Routes>

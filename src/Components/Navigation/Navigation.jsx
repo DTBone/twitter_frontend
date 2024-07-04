@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Store/Auth/Action";
 
 const Navigation = () => {
-  const { auth } = useSelector((store) => store);
+  const auth = useSelector((store) => store.auth);
+  console.log("user: \n", auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,7 +22,7 @@ const Navigation = () => {
   const handleLogout = () => {
     console.log("Logout");
     handleClose();
-    dispatch(logout);
+    dispatch(logout());
   };
   return (
     <div className="h-screen sticky top-0">
@@ -73,17 +74,14 @@ const Navigation = () => {
       </div>
       <div className="flex item-center justify-between">
         <div className="flex item-center space-x-3">
-          <Avatar
-            alt="username"
-            src="https://scontent.fsgn10-1.fna.fbcdn.net/v/t39.30808-1/446889174_2242024396164212_905261128201787308_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHnf2PS5Rg-xe-zG5-AG6wPv3_UPiFju-m_f9Q-IWO76eUQo05gstLrD2L6RzXxDMUFWfTFpoPOhFy2uxXWlN2m&_nc_ohc=39jXQzC-8UIQ7kNvgFVHVYD&_nc_ht=scontent.fsgn10-1.fna&oh=00_AYBPxz47ezQVN2prfL3Fzimxx_oncmqNMzOPGsnyJSlTgw&oe=666E56DC"
-          />
+          <Avatar alt="username" src="" />
+
           <div>
-            <p>{auth.user?.fullName}</p>
+            <p>{auth.user?.fullName || "Chưa đăng nhập"}</p>
             <div className="opacity-70">
-              @{auth.user?.fullName.split(" ").join("_").toLowerCase()}
+              @{(auth.user?.fullName || "").split(" ").join("_").toLowerCase()}
             </div>
           </div>
-
           <Button
             id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}

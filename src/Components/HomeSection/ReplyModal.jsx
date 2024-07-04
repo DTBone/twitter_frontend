@@ -14,6 +14,8 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import TweetCard from "./TweetCard";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createReTweet, createTweetReply } from "../../Store/Twit/Action";
 
 const style = {
   position: "absolute",
@@ -31,21 +33,25 @@ const style = {
 const validationSchema = Yup.object().shape({
   content: Yup.string().required("Tweets text is required."),
 });
-export default function ReplyModal({ handleClose, open }) {
+export default function ReplyModal({ handleClose, open, item }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  //console.log("Item in ReplyModal:", item);
 
   const [uploadinImage, setUploadingImage] = React.useState(false);
   const [selectImage, setSelectedImage] = React.useState("");
 
   const handleSubmit = (values) => {
-    console.log("values: " + values);
+    dispatch(createTweetReply(values));
+    handleClose();
+    console.log("submit values: ", values);
   };
 
   const formik = useFormik({
     initialValues: {
       content: "",
       image: "",
-      twitId: 4,
+      twitId: item?.id || "",
     },
     onSubmit: handleSubmit,
     validationSchema,
@@ -74,7 +80,7 @@ export default function ReplyModal({ handleClose, open }) {
               className="cursor-pointer"
               onClick={() => navigate(`/profile/${6}`)}
               alt="username"
-              src="https://scontent.fsgn10-1.fna.fbcdn.net/v/t39.30808-1/446889174_2242024396164212_905261128201787308_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHnf2PS5Rg-xe-zG5-AG6wPv3_UPiFju-m_f9Q-IWO76eUQo05gstLrD2L6RzXxDMUFWfTFpoPOhFy2uxXWlN2m&_nc_ohc=39jXQzC-8UIQ7kNvgFVHVYD&_nc_ht=scontent.fsgn10-1.fna&oh=00_AYBPxz47ezQVN2prfL3Fzimxx_oncmqNMzOPGsnyJSlTgw&oe=666E56DC"
+              src=""
             />
             <div className="w-full">
               <div className="flex justify-between items-center">
@@ -104,19 +110,16 @@ export default function ReplyModal({ handleClose, open }) {
           </div>
           <section className={`py-10`}>
             <div className="flex space-x-5">
-              <Avatar
-                alt="username"
-                src="https://scontent.fsgn10-1.fna.fbcdn.net/v/t39.30808-1/446889174_2242024396164212_905261128201787308_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHnf2PS5Rg-xe-zG5-AG6wPv3_UPiFju-m_f9Q-IWO76eUQo05gstLrD2L6RzXxDMUFWfTFpoPOhFy2uxXWlN2m&_nc_ohc=39jXQzC-8UIQ7kNvgFVHVYD&_nc_ht=scontent.fsgn10-1.fna&oh=00_AYBPxz47ezQVN2prfL3Fzimxx_oncmqNMzOPGsnyJSlTgw&oe=666E56DC"
-              />
+              <Avatar alt="username" src="" />
               <div className="w-full">
-                <form className={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                   <div>
                     <input
                       type="text"
                       name="content"
                       placeholder="Reply"
                       className={`border-none outline-none text-xl bg-transparent`}
-                      {...formik.getFieldProps("Content")}
+                      {...formik.getFieldProps("content")}
                     />
                     {formik.errors.content && formik.touched.content && (
                       <span className="text-red-500">

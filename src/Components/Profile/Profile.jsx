@@ -56,7 +56,7 @@ const Profile = () => {
           <Avatar
             className="transform -translate-y-24"
             alt="Thanh Binh nee"
-            src="https://scontent.fsgn10-1.fna.fbcdn.net/v/t39.30808-1/446889174_2242024396164212_905261128201787308_n.jpg?stp=dst-jpg_s200x200&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHnf2PS5Rg-xe-zG5-AG6wPv3_UPiFju-m_f9Q-IWO76eUQo05gstLrD2L6RzXxDMUFWfTFpoPOhFy2uxXWlN2m&_nc_ohc=39jXQzC-8UIQ7kNvgFPw8Zd&_nc_ht=scontent.fsgn10-1.fna&oh=00_AYAMeyWr5hZZ0VoEIzWF-OrYvwoucTtklCibGkYmKE_Y6g&oe=666F37DC"
+            src=""
             sx={{ width: "10rem", height: "10rem", border: "4px solid white" }}
           />
 

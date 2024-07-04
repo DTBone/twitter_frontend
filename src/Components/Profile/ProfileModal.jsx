@@ -95,7 +95,7 @@ export default function ProfileModal({ open, handleClose }) {
                         height: "10rem",
                         border: "4px solid white",
                       }}
-                      src="https://scontent.fsgn10-1.fna.fbcdn.net/v/t39.30808-1/446889174_2242024396164212_905261128201787308_n.jpg?stp=dst-jpg_s200x200&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHnf2PS5Rg-xe-zG5-AG6wPv3_UPiFju-m_f9Q-IWO76eUQo05gstLrD2L6RzXxDMUFWfTFpoPOhFy2uxXWlN2m&_nc_ohc=Sp96_v0STvAQ7kNvgEtB8z-&_nc_ht=scontent.fsgn10-1.fna&oh=00_AYDla_8B8OKJni-jqGTBL0rtz8ckAdcczmlZlmg1aIwrtg&oe=6670895C"
+                      src=""
                     />
                     <input
                       type="file"

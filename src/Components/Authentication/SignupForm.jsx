@@ -17,7 +17,7 @@ import { registerUser } from "../../Store/Auth/Action";
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
-  fullname: Yup.string().required("Full name is required"),
+  fullName: Yup.string().required("Full name is required"),
   dateOfBirth: Yup.object().shape({
     month: Yup.string().required("Month is required"),
     day: Yup.string().required("Day is required"),
@@ -45,7 +45,7 @@ const SignupForm = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      fullname: "",
+      fullName: "",
       email: "",
       password: "",
       dateOfBirth: {
@@ -79,16 +79,14 @@ const SignupForm = () => {
             className=""
             fullWidth
             label="Full Name"
-            name="fullname"
+            name="fullName"
             variant="outlined"
             size="large"
-            // placeholder="Email Address"
-            //type="text"
-            value={formik.values.fullname}
+            value={formik.values.fullName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.fullname && Boolean(formik.errors.fullname)}
-            helperText={formik.touched.fullname && formik.errors.fullname}
+            error={formik.touched.fullName && Boolean(formik.errors.fullName)}
+            helperText={formik.touched.fullName && formik.errors.fullName}
           ></TextField>
         </Grid>
         <Grid item xs={12}>
@@ -99,8 +97,6 @@ const SignupForm = () => {
             name="email"
             variant="outlined"
             size="large"
-            // placeholder="Email Address"
-            //type="text"
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

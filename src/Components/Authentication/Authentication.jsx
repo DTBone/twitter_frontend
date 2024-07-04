@@ -36,7 +36,7 @@ const Authentication = () => {
           </div>
         </Grid>
 
-        <Grid className="px-10 " lg={5} xs={12}>
+        <Grid className="px-10 " item lg={5} xs={12}>
           <h1 className="font-bold text-6xl mt-10">Happening Now</h1>
           <h1 className="font-bold text-3xl py-16">Join Twitter Today</h1>
           <div className="w-[60%]">
