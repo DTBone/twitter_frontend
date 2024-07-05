@@ -8,14 +8,16 @@ import ImageIcon from "@mui/icons-material/Image";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import TweetCard from "./TweetCard";
-import { getAllTweets } from "./../../Store/Twit/Action";
+import { createTweet, getAllTweets } from "./../../Store/Twit/Action";
 import { useDispatch, useSelector } from "react-redux";
+import { uploadToCloudnary } from "../../Utils/uploadToCloudnary";
 
 const validationSchema = Yup.object().shape({
   content: Yup.string().required("Tweets text is required."),
 });
 
 const HomeSection = () => {
+  const { auth } = useSelector((store) => store);
   const [uploadinImage, setUploadingImage] = useState(false);
   const [selectImage, setSelectedImage] = useState("");
   const dispatch = useDispatch();
@@ -25,24 +27,28 @@ const HomeSection = () => {
 
   useEffect(() => {
     dispatch(getAllTweets());
-  }, [twit.like, twit.retwit, twit.replyTwits]);
+  }, [twit.like, twit.retwit, twit.twit]);
 
-  const handleSubmit = (values) => {
-    console.log("values: " + values);
+  const handleSubmit = (values, actions) => {
+    dispatch(createTweet(values));
+    actions.resetForm();
+    console.log("values: ", values);
+    setSelectedImage("");
   };
 
   const formik = useFormik({
     initialValues: {
       content: "",
       image: "",
+      isTweet: true,
     },
     onSubmit: handleSubmit,
     validationSchema,
   });
 
-  const handleSelectImage = (event) => {
+  const handleSelectImage = async (event) => {
     setUploadingImage(true);
-    const imgUrl = event.target.files[0];
+    const imgUrl = await uploadToCloudnary(event.target.files[0]);
     formik.setFieldValue("image", imgUrl);
 
     setSelectedImage(imgUrl);
@@ -55,19 +61,16 @@ const HomeSection = () => {
       </section>
       <section className={`pb-10`}>
         <div className="flex space-x-5">
-          <Avatar
-            alt="username"
-            src="https://scontent.fsgn10-1.fna.fbcdn.net/v/t39.30808-1/446889174_2242024396164212_905261128201787308_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHnf2PS5Rg-xe-zG5-AG6wPv3_UPiFju-m_f9Q-IWO76eUQo05gstLrD2L6RzXxDMUFWfTFpoPOhFy2uxXWlN2m&_nc_ohc=39jXQzC-8UIQ7kNvgFVHVYD&_nc_ht=scontent.fsgn10-1.fna&oh=00_AYBPxz47ezQVN2prfL3Fzimxx_oncmqNMzOPGsnyJSlTgw&oe=666E56DC"
-          />
+          <Avatar alt="username" src={auth.user?.image} />
           <div className="w-full">
-            <form className={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
               <div>
                 <input
                   type="text"
                   name="content"
                   placeholder="What is happening?"
                   className={`border-none outline-none text-xl bg-transparent`}
-                  {...formik.getFieldProps("Content")}
+                  {...formik.getFieldProps("content")}
                 />
                 {formik.errors.content && formik.touched.content && (
                   <span className="text-red-500">{formik.errors.content}</span>
@@ -107,13 +110,16 @@ const HomeSection = () => {
                 </div>
               </div>
             </form>
+            <div>{selectImage && <img src={selectImage} alt="" />}</div>
           </div>
         </div>
       </section>
       <section>
-        {twit.twits.map((item) => (
-          <TweetCard item={item} />
-        ))}
+        {Array.isArray(twit.twits) && twit.twits.length > 0 ? (
+          twit.twits.map((item) => <TweetCard key={item.id} item={item} />)
+        ) : (
+          <p>No tweets available</p>
+        )}
       </section>
     </div>
   );

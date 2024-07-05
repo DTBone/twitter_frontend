@@ -35,7 +35,7 @@ const TwitDetais = () => {
         <Divider sx={{ margin: "2rem 0rem" }} />
       </section>
       <section>
-        {twit.twit.replyTwits.map((item) => (
+        {twit.twit?.replyTwits.map((item) => (
           <TweetCard item={item} />
         ))}
       </section>

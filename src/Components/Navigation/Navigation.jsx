@@ -49,7 +49,7 @@ const Navigation = () => {
               className="cursor-pointer flex space-x-3 item-center"
               onClick={() =>
                 item.title === "Profile"
-                  ? navigate(`/profile/${5}`)
+                  ? navigate(`/profile/${auth.user?.id}`)
                   : navigate(item.path)
               }
             >
@@ -74,7 +74,7 @@ const Navigation = () => {
       </div>
       <div className="flex item-center justify-between">
         <div className="flex item-center space-x-3">
-          <Avatar alt="username" src="" />
+          <Avatar alt="username" src={auth.user?.image} />
 
           <div>
             <p>{auth.user?.fullName || "Chưa đăng nhập"}</p>

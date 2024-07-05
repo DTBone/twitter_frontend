@@ -1,12 +1,14 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useFormik } from "formik";
 import { Avatar, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import "./ProfileModal.css";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserProfile } from "./../../Store/Auth/Action";
+import { uploadToCloudnary } from "../../Utils/uploadToCloudnary";
 const style = {
   position: "absolute",
   top: "50%",
@@ -23,18 +25,25 @@ const style = {
 
 export default function ProfileModal({ open, handleClose }) {
   //   const [open, setOpen] = React.useState(false);
+  const { auth } = useSelector((store) => store);
+
   const [uploading, setUploading] = React.useState(false);
+  const dispatch = useDispatch();
+  const [selectedImage, setSelectedImage] = React.useState("");
 
   const handleSubmit = (values) => {
+    dispatch(updateUserProfile(values));
     console.log("handle Submit", values);
+    setSelectedImage("");
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     setUploading(true);
     const { name } = event.target;
-    const file = event.target.files[0];
+    const file = await uploadToCloudnary(event.target.files[0]);
     formik.setFieldValue(name, file);
     setUploading(false);
+    setSelectedImage(file);
     console.log("handle Image Change");
   };
 
@@ -75,7 +84,7 @@ export default function ProfileModal({ open, handleClose }) {
                   <div className=" relative">
                     <img
                       className="w-full h-[12rem] object-cover object-center"
-                      src="https://cdn.pixabay.com/photo/2019/01/23/21/16/pixabay-3951079_640.png"
+                      src={auth.user?.backgroundImage}
                       alt=""
                     />
 
@@ -95,7 +104,7 @@ export default function ProfileModal({ open, handleClose }) {
                         height: "10rem",
                         border: "4px solid white",
                       }}
-                      src=""
+                      src={selectedImage || auth.user?.image}
                     />
                     <input
                       type="file"

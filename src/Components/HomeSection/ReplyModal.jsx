@@ -85,14 +85,17 @@ export default function ReplyModal({ handleClose, open, item }) {
             <div className="w-full">
               <div className="flex justify-between items-center">
                 <div className="flex cursor-pointer items-center space-x-2">
-                  <span className="font-semibold">Thanh Binh neeee</span>
+                  <span className="font-semibold">{item?.user?.fullName}</span>
 
                   <img
                     className="ml-2 w-5 h-5"
                     src="https://abs.twimg.com/responsive-web/client-web/verification-card-v2@3x.8ebee01a.png"
                     alt=""
                   />
-                  <span className="text-gray-600">@thanhbinhne . 2m</span>
+                  <span className="text-gray-600">
+                    @{item?.user?.fullName.split(" ").join("_").toLowerCase()} .
+                    2m
+                  </span>
                 </div>
               </div>
 
@@ -101,9 +104,7 @@ export default function ReplyModal({ handleClose, open, item }) {
                   className="cursor-pointer"
                   onClick={() => navigate(`/twit/${3}`)}
                 >
-                  <p className="mb-2 p-0">
-                    twitter clone - full stack project spring boot and react
-                  </p>
+                  <p className="mb-2 p-0">{item?.content}</p>
                 </div>
               </div>
             </div>

@@ -11,10 +11,12 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { FavoriteOutlined } from "@mui/icons-material";
 import ReplyModal from "./ReplyModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createReTweet, likeTweet } from "../../Store/Twit/Action";
 
 const TweetCard = ({ item }) => {
+  const { auth } = useSelector((store) => store);
+  const [selectedImage, setSelectedImage] = useState("");
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -60,7 +62,7 @@ const TweetCard = ({ item }) => {
           className="cursor-pointer"
           onClick={() => navigate(`/profile/${item?.user.id}`)}
           alt="username"
-          src=""
+          src={selectedImage || item?.user?.image}
         />
         <div className="w-full">
           <div className="flex justify-between items-center">

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { API_BASE_URL, api } from "../../Config/api"
-import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE, GET_USER_PROFILE_SUCCESS, GET_USER_PROFILE_FAILURE, LOGOUT, FIND_USER_BY_ID_REQUEST, FIND_USER_BY_ID_FAILURE, UPDATE_USER_REQUEST, UPDATE_USER_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_FAILURE } from "./ActionType"
+import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE, GET_USER_PROFILE_SUCCESS, GET_USER_PROFILE_FAILURE, LOGOUT, FIND_USER_BY_ID_REQUEST, FIND_USER_BY_ID_FAILURE, UPDATE_USER_REQUEST, UPDATE_USER_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_FAILURE, FIND_USER_BY_ID_SUCCESS, UPDATE_USER_SUCCESS, FOLLOW_USER_SUCCESS } from "./ActionType"
 
 export const loginUser = (loginData) => async (dispatch) => {
     try {
@@ -71,8 +71,8 @@ export const getUserProfile = (jwt) => async (dispatch) => {
 export const findUserById = (userId) => async (dispatch) => {
     try {
         const { data } = await api.get(`api/users/${userId}`);
-
-        dispatch({ type: FIND_USER_BY_ID_REQUEST, payload: data });
+        console.log("findUserById", data);
+        dispatch({ type: FIND_USER_BY_ID_SUCCESS, payload: data });
     } catch (error) {
         console.log("error", error);
         dispatch({ type: FIND_USER_BY_ID_FAILURE, payload: error.message });
@@ -82,9 +82,9 @@ export const findUserById = (userId) => async (dispatch) => {
 
 export const updateUserProfile = (reqData) => async (dispatch) => {
     try {
-        const { data } = await api.post(`api/users/update`, reqData);
+        const { data } = await api.put(`api/users/update`, reqData);
         console.log("update: ", data);
-        dispatch({ type: UPDATE_USER_REQUEST, payload: data });
+        dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
     } catch (error) {
         console.log("error", error);
         dispatch({ type: UPDATE_USER_FAILURE, payload: error.message });
@@ -94,8 +94,8 @@ export const updateUserProfile = (reqData) => async (dispatch) => {
 export const followUserAction = (userId) => async (dispatch) => {
     try {
         const { data } = await api.put(`api/users/${userId}/follow`);
-        console.log("follow: ", data);
-        dispatch({ type: FOLLOW_USER_REQUEST, payload: data });
+        console.log("follow user: ", data);
+        dispatch({ type: FOLLOW_USER_SUCCESS, payload: data });
     } catch (error) {
         console.log("error", error);
         dispatch({ type: FOLLOW_USER_FAILURE, payload: error.message });
